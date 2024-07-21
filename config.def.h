@@ -38,17 +38,48 @@ static const char *colors[][3]      = {
 	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
 };
 
+typedef struct {
+	const char *name;
+	const void *cmd;
+} Sp;
+const char *spcmd1[] = {"st", "-n", "spterm", "-g", "120x30", NULL };
+const char *spcmd2[] = {"st", "-n", "spfm", "-g", "120x30", "-e", "ranger", NULL };
+const char *spcmd3[] = {"keepassxc", NULL };
+const char *spcmd4[] = {"pavucontrol", NULL };
+const char *spcmd5[] = {"pcmanfm", NULL };
+const char *spcmd6[] = {"st", "-n", "sptop", "-g", "120x30", "-e", "btop", NULL };
+static Sp scratchpads[] = {
+	/* name          cmd  */
+	{"spterm",      spcmd1},
+	{"spranger",    spcmd2},
+	{"keepassxc",   spcmd3},
+	{"pavucontrol", spcmd4},
+	{"pcmanfm", 		spcmd5},
+	{"sptop", 	  	spcmd6},
+};
+
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
-
 static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
+	{ "Gimp",	       NULL,			   NULL,		   0,				       1,			     -1 },
+	{ NULL,          NULL,   "Picture-in-Picture", 7, 				 1, 				 -1 },    
+	{ "firefox",     NULL,			   NULL,		   1 << 1,			   0,			     -1 },
+	{ "qutebrowser", NULL,			   NULL,		   1 << 1,			   0,			     -1 },
+	{ "Thunar",      NULL,			   NULL,		   1 << 2,			   1,			     -1 },
+	{ "thunderbird", NULL,   			 NULL,  		 1 << 4, 				 0, 				 -1 },
+	{ "steam", 			 NULL,			   NULL,		   1 << 4,			   1,			     -1 },
+	{ "Clementine",  NULL,			   NULL,		   1 << 5,			   1,			     -1 },
+	{ NULL,		     "spterm",		   NULL,		   SPTAG(0),		   1,			     -1 },
+	{ NULL,		     "spfm",		     NULL,		   SPTAG(1),		   1,			     -1 },
+	{ NULL,		     "keepassxc",    NULL,		   SPTAG(2),		   1,			     -1 },
+	{ NULL,		     "pavucontrol",  NULL,		   SPTAG(3),		   1,			     -1 },
+	{ NULL,		     "pcmanfm",      NULL,		   SPTAG(4),		   1,			     -1 },
+	{ NULL,		     "sptop",        NULL,		   SPTAG(5),		   1,			     -1 },
 };
 
 /* layout(s) */
@@ -62,21 +93,21 @@ static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen win
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[]=",      tile },    /* first entry is default */
-	{ "[M]",      monocle },
-	{ "[@]",      spiral },
-	{ "[\\]",     dwindle },
-	{ "H[]",      deck },
-	{ "TTT",      bstack },
-	{ "===",      bstackhoriz },
-	{ "HHH",      grid },
-	{ "###",      nrowgrid },
-	{ "---",      horizgrid },
-	{ ":::",      gaplessgrid },
-	{ "|M|",      centeredmaster },
-	{ ">M>",      centeredfloatingmaster },
-	{ "><>",      NULL },    /* no layout function means floating behavior */
-	{ NULL,       NULL },
+	{ "[]=",  	/* 0 */    tile },    /* first entry is default */
+	{ "[M]",    /* 1 */ 	 monocle },
+	{ "[@]",    /* 2 */ 	 spiral },
+	{ "[\\]",   /* 3 */ 	 dwindle },
+	{ "H[]",    /* 4 */ 	 deck },
+	{ "TTT",    /* 5 */    bstack },
+	{ "===",    /* 6 */  	 bstackhoriz },
+	{ "HHH",    /* 7 */  	 grid },
+	{ "###",    /* 8 */  	 nrowgrid },
+	{ "---",    /* 9 */  	 horizgrid },
+	{ ":::",    /* 10 */   gaplessgrid },
+	{ "|M|",    /* 11 */   centeredmaster },
+	{ ">M>",    /* 12 */   centeredfloatingmaster },
+	{ "><>",    /* 13 */   NULL },    /* no layout function means floating behavior */
+	{ NULL,       				 NULL },
 };
 
 /* key definitions */
@@ -92,13 +123,17 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+static const char *launchercmd[] = { "rofi", "-show", "drun", NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, NULL };
 static const char *termcmd[]  = { "st", NULL };
+static const char *webcmd[]  = { "qutebrowser", NULL };
 
 #include "movestack.c"
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
-	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
+	{ MODKEY,                       XK_r,      spawn,          {.v = dmenucmd } },
+	{ MODKEY,                       XK_y,      spawn,          {.v = launchercmd} }, // spawn rofi for launching other programs
+	{ MODKEY|ControlMask,           XK_b,      spawn,          {.v = webcmd } },
 	{ MODKEY,    					          XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
@@ -131,9 +166,11 @@ static const Key keys[] = {
 	{ MODKEY|Mod1Mask|ShiftMask,    XK_0,      defaultgaps,    {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
-	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
+ 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
+ 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
+	{ MODKEY,                       XK_g,      setlayout,      {.v = &layouts[10]} },
+	{ MODKEY,                       XK_c,      setlayout,      {.v = &layouts[11]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
@@ -146,6 +183,12 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_Left,   viewprev,       {0} },
 	{ MODKEY|ShiftMask,             XK_Right,  tagtonext,      {0} },
 	{ MODKEY|ShiftMask,             XK_Left,   tagtoprev,      {0} },
+	{ 0,            								XK_F12,  	 togglescratch,  {.ui = 0 } },
+	{ 0,            								XK_F11,	   togglescratch,  {.ui = 1 } },
+	{ 0, 			           						XK_F9,	   togglescratch,  {.ui = 2 } },
+	{ 0,            								XK_F5,	   togglescratch,  {.ui = 3 } },
+	{ 0,            								XK_F10,	   togglescratch,  {.ui = 4 } },
+	{ 0,            								XK_F1,	   togglescratch,  {.ui = 5 } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
@@ -168,7 +211,7 @@ static const Button buttons[] = {
 	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
-	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
+	{ ClkClientWin,         MODKEY,         Button1,        resizemouse,    {0} },
 	{ ClkTagBar,            0,              Button1,        view,           {0} },
 	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
