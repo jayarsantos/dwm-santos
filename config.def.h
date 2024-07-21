@@ -1,5 +1,20 @@
 /* See LICENSE file for copyright and license details. */
 
+static const char *const autostart[] = {
+	"wal", "-R", NULL,
+	"sh", "-c", "~/.local/bin/dwmscripts/dwmbar", NULL,
+	"/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1", NULL,
+	"xfce4-power-manager", NULL,
+	"picom", "--animations", "-b", NULL,
+	"nm-applet", NULL,
+	"keepassxc"
+	"udiskie", "-as", "--appindicator", NULL,
+	"light-locker", NULL,
+	"thunar", "--daemon", NULL,
+	"sh", "-c", "~/.config/pywal/wallpaperchanger.sh update", NULL,
+	NULL /* terminate */
+};
+
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
