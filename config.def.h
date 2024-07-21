@@ -2,7 +2,7 @@
 
 static const char *const autostart[] = {
 	"wal", "-R", NULL,
-	"sh", "-c", "~/.local/bin/dwmscripts/dwmbar", NULL,
+	"slstatus", NULL,
 	"/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1", NULL,
 	"xfce4-power-manager", NULL,
 	"picom", "--animations", "-b", NULL,
