@@ -5,7 +5,7 @@ static const char *const autostart[] = {
 	"slstatus", NULL,
 	"/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1", NULL,
 	"xfce4-power-manager", NULL,
-	"picom", "--animations", "-b", NULL,
+	"picom", "--config", "~/.config/picom.conf", "--animations", "-b", NULL,
 	"nm-applet", NULL,
 	"keepassxc"
 	"udiskie", "-as", "--appindicator", NULL,
@@ -32,10 +32,12 @@ static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
 static const char col_cyan[]        = "#005577";
+static const char col_urgborder[]   = "#ff0000";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
 	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
+	[SchemeUrg]  = { col_gray4, col_cyan,  col_urgborder  },
 };
 
 typedef struct {
@@ -70,6 +72,7 @@ static const Rule rules[] = {
 	{ "Gimp",	       NULL,			   NULL,		   0,				       1,			     -1 },
 	{ NULL,          NULL,   "Picture-in-Picture", 7, 				 1, 				 -1 },    
 	{ "firefox",     NULL,			   NULL,		   1 << 1,			   0,			     -1 },
+	{ "Chromium",    NULL,			   NULL,		   1 << 1,			   0,			     -1 },
 	{ "qutebrowser", NULL,			   NULL,		   1 << 1,			   0,			     -1 },
 	{ "Thunar",      NULL,			   NULL,		   1 << 2,			   1,			     -1 },
 	{ "thunderbird", NULL,   			 NULL,  		 1 << 4, 				 0, 				 -1 },
