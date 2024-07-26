@@ -5,13 +5,13 @@ static const char *const autostart[] = {
 	"slstatus", NULL,
 	"/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1", NULL,
 	"xfce4-power-manager", NULL,
-	"picom", "--config", "~/.config/picom.conf", "--animations", "-b", NULL,
+	"picom", "--animations", "-b", NULL,
 	"nm-applet", NULL,
 	"keepassxc"
 	"udiskie", "-as", "--appindicator", NULL,
 	"light-locker", NULL,
 	"thunar", "--daemon", NULL,
-	"sh", "-c", "~/.config/pywal/wallpaperchanger.sh update", NULL,
+	"sh", "-c", "~/.config/pywal/wallpaperchanger.sh", "update", NULL,
 	NULL /* terminate */
 };
 
