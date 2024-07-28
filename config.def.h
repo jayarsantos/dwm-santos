@@ -27,9 +27,10 @@ static unsigned int borderpx  						= 1;        /* border pixel of windows */
 static unsigned int snap      						= 32;       /* snap pixel */
 static int showbar            						= 1;        /* 0 means no bar */
 static int topbar             						= 1;        /* 0 means bottom bar */
-static char font[]            						= "MesloLGS Nerd Font Mono:size=10";
+static char font[]              					= "UbuntuMono Nerd Font:size=12:antialias=true:autohint=true";
 static char dmenufont[]       						= "monospace:size=10";
-static const char *fonts[]          			= { font, "NotoColorEmoji:pixelsize=10:antialias=true:autohint=true"};
+static const char *fonts[]          			= { font, "FontAwesome:size:12:antialias=true:autohint=true",
+                                             "JoyPixels:size=12:antialias=true:autohint=true" };
 static char normbgcolor[]           			= "#222222";
 static char normbordercolor[]       			= "#444444";
 static char normfgcolor[]           			= "#bbbbbb";
@@ -65,8 +66,11 @@ static Sp scratchpads[] = {
 };
 
 /* tagging */
-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
-static const int taglayouts[] = { 11, 6, 1, 13, 6, 0, 0, 0, 0 };
+static const char *tags[] = { "", "", "", "", "", "" };
+static const char *tagsalt[] = { "1", "2", "3", "4", "5", "6" };
+static const int taglayouts[] = { 11, 0, 0, 13, 11, 13 };
+static const int momentaryalttags = 1; /* 1 means alttags will show only when key is held down*/
+
 static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
@@ -219,6 +223,7 @@ static const Key keys[] = {
 	{ 0,            								XK_F5,	   togglescratch,  {.ui = 3 } },
 	{ 0,            								XK_F10,	   togglescratch,  {.ui = 4 } },
 	{ 0,            								XK_F1,	   togglescratch,  {.ui = 5 } },
+	{ MODKEY,                       XK_n,      togglealttag,   {0} },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
