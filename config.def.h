@@ -27,8 +27,10 @@ static const unsigned int gappov    = 30;       /* vert outer gap between window
 static       int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "MesloLGS Nerd Font Mono:size=10", "NotoColorEmoji:pixelsize=10:antialias=true:autohint=true"  };
-static const char dmenufont[]       = "FiraCode Nerd Font:size=10";
+static const char *fonts[]          = { "UbuntuMono Nerd Font:size=12:antialias=true:autohint=true",
+                                        "FontAwesome:size:12:antialias=true:autohint=true",
+                                        "JoyPixels:size=12:antialias=true:autohint=true" };
+static const char dmenufont[]       = "UbuntuMono Nerd Font:size=10";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
@@ -63,8 +65,11 @@ static Sp scratchpads[] = {
 };
 
 /* tagging */
-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
-static const int taglayouts[] = { 11, 6, 1, 13, 6, 0, 0, 0, 0 };
+static const char *tags[] = { "", "", "", "", "", "" };
+static const char *tagsalt[] = { "1", "2", "3", "4", "5", "6" };
+static const int taglayouts[] = { 11, 0, 0, 13, 1, 13 };
+static const int momentaryalttags = 1; /* 1 means alttags will show only when key is held down*/
+
 static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
@@ -196,6 +201,7 @@ static const Key keys[] = {
 	{ 0,            								XK_F5,	   togglescratch,  {.ui = 3 } },
 	{ 0,            								XK_F10,	   togglescratch,  {.ui = 4 } },
 	{ 0,            								XK_F1,	   togglescratch,  {.ui = 5 } },
+	{ MODKEY,                       XK_n,      togglealttag,   {0} },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
