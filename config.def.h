@@ -31,6 +31,8 @@ static const char *fonts[]          = { "UbuntuMono Nerd Font:size=12:antialias=
                                         "FontAwesome:size:12:antialias=true:autohint=true",
                                         "JoyPixels:size=12:antialias=true:autohint=true" };
 static const char dmenufont[]       = "UbuntuMono Nerd Font:size=10";
+static const int horizpadbar        = 2;        /* horizontal padding for statusbar */
+static const int vertpadbar         = 8;        /* vertical padding for statusbar */
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
