@@ -2,12 +2,13 @@
 
 static const char *const autostart[] = {
 	"/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1", NULL,
+	"xfce4-power-manager", NULL,
 	"slstatus", NULL,
 	"picom", "--animations", "-b", NULL,
 	"nm-applet", NULL,
 	"keepassxc", NULL,
+	"nitrogen", "--restore", NULL,
 	/* "wal", "-R", NULL,
-	"xfce4-power-manager", NULL,
 	"sh", "-c", "~/.config/pywal/wallpaperchanger.sh", "update", NULL, */
 	NULL /* terminate */
 };
@@ -51,12 +52,12 @@ typedef struct {
 	const char *name;
 	const void *cmd;
 } Sp;
-const char *spcmd1[] = {"st", "-n", "spterm", "-g", "320x70", NULL };
-const char *spcmd2[] = {"st", "-n", "spfm", "-g", "320x70", "-e", "ranger", NULL };
+const char *spcmd1[] = {"st", "-n", "spterm", "-g", "130x35", NULL };
+const char *spcmd2[] = {"st", "-n", "spfm", "-g", "130x35", "-e", "ranger", NULL };
 const char *spcmd3[] = {"keepassxc", NULL };
 const char *spcmd4[] = {"pavucontrol", NULL };
 const char *spcmd5[] = {"pcmanfm", NULL };
-const char *spcmd6[] = {"st", "-n", "sptop", "-g", "320x70", "-e", "btop", NULL };
+const char *spcmd6[] = {"st", "-n", "sptop", "-g", "130x35", "-e", "btop", NULL };
 static Sp scratchpads[] = {
 	/* name          cmd  */
 	{"spterm",      spcmd1},
@@ -78,23 +79,24 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",	     NULL,			   NULL,		   0,				   1,			     -1 },
-	{ NULL,          NULL,   "Picture-in-Picture",     7, 				   1, 				 -1 },    
-	{ "firefox",     NULL,			   NULL,		   1 << 1,			   0,			     -1 },
-	{ "librewolf-default",   NULL,			   NULL,		   1 << 1,			   0,			     -1 },
-	{ "Chromium",    NULL,			   NULL,		   1 << 1,			   0,			     -1 },
-	{ "qutebrowser", NULL,			   NULL,		   1 << 1,			   0,			     -1 },
-	{ "Thunar",      NULL,			   NULL,		   1 << 2,			   1,			     -1 },
-	{ "thunderbird", NULL,   		   NULL,  		   1 << 4, 			   0, 				 -1 },
-	{ "steam", 		 NULL,			   NULL,		   1 << 4,			   1,			     -1 },
-	{ "Clementine",  NULL,			   NULL,		   1 << 5,			   1,			     -1 },
-	{ NULL,		     "spterm",		   NULL,		   SPTAG(0),		   1,			     -1 },
-	{ NULL,		     "spfm",		   NULL,		   SPTAG(1),		   1,			     -1 },
-	{ NULL,		     "keepassxc",      NULL,		   SPTAG(2),		   1,			     -1 },
-	{ NULL,		     "pavucontrol",    NULL,		   SPTAG(3),		   1,			     -1 },
-	{ NULL,		     "pcmanfm",        NULL,		   SPTAG(4),		   1,			     -1 },
-	{ NULL,		     "sptop",          NULL,		   SPTAG(5),		   1,			     -1 },
+	/* class            instance        title       tags mask     isfloating   monitor */
+	{ "Gimp",	            NULL,			     NULL,		      0,				   1,			     -1 },
+	{ NULL,	            "libreoffice",	 NULL,		      0,				   1,			     -1 },
+	{ NULL,               NULL,   "Picture-in-Picture",   7, 				   1, 				 -1 },    
+	{ "firefox",          NULL,			     NULL,		   1 << 1,			   0,			     -1 },
+	{ "librewolf-default", NULL,			   NULL,		   1 << 1,			   0,			     -1 },
+	{ "Chromium",    NULL,			         NULL,		   1 << 1,			   0,			     -1 },
+	{ "qutebrowser", NULL,			         NULL,		   1 << 1,			   0,			     -1 },
+	{ "Thunar",      NULL,			         NULL,		   1 << 2,			   1,			     -1 },
+	{ "thunderbird", NULL,   		         NULL,  		 1 << 4, 			   0, 				 -1 },
+	{ "steam", 	 	   NULL,			         NULL,		   1 << 4,			   1,			     -1 },
+	{ "Clementine",  NULL,			         NULL,		   1 << 5,			   1,			     -1 },
+	{ NULL,		     "spterm",		         NULL,		   SPTAG(0),		   1,			     -1 },
+	{ NULL,		     "spfm",		           NULL,		   SPTAG(1),		   1,			     -1 },
+	{ NULL,		     "keepassxc",          NULL,		   SPTAG(2),		   1,			     -1 },
+	{ NULL,		     "pavucontrol",        NULL,		   SPTAG(3),		   1,			     -1 },
+	{ NULL,		     "pcmanfm",            NULL,		   SPTAG(4),		   1,			     -1 },
+	{ NULL,		     "sptop",              NULL,		   SPTAG(5),		   1,			     -1 },
 };
 
 /* layout(s) */
@@ -138,7 +140,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *launchercmd[] = { "rofi", "-show", "drun", NULL };
+static const char *launchercmd[] = { "rofi", "-show", "drun", "-theme", "~/.config/rofi/appmenu/drun.rasi", NULL };
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", selfgcolor, NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char *webcmd[]  = { "qutebrowser", NULL };
