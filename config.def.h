@@ -1,14 +1,16 @@
 /* See LICENSE file for copyright and license details. */
 
 static const char *const autostart[] = {
-	"/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1", NULL,
-	"wal", "-R", NULL,
+	// "/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1", NULL,
 	"slstatus", NULL,
-	"xfce4-power-manager", NULL,
+	// "xfce4-power-manager", NULL,
 	"picom", "--animations", "-b", NULL,
-	"nm-applet", NULL,
+	// "nm-applet", NULL,
 	"keepassxc", NULL,
-	"sh", "-c", "~/.config/pywal/wallpaperchanger.sh", "update", NULL,
+	"sh", "-c", "~/.fehbg", NULL,
+	"dex", "-a", NULL,
+	// "wal", "-R", NULL,
+	// "sh", "-c", "~/.config/pywal/wallpaperchanger.sh", "update", NULL,
 	NULL /* terminate */
 };
 
@@ -23,8 +25,9 @@ static const unsigned int gappiv    			= 10;       /* vert inner gap between win
 static const unsigned int gappoh    			= 10;       /* horiz outer gap between windows and screen edge */
 static const unsigned int gappov    			= 30;       /* vert outer gap between windows and screen edge */
 static       int smartgaps          			= 0;        /* 1 means no outer gap when there is only one window */
-static unsigned int borderpx  						= 1;        /* border pixel of windows */
+static unsigned int borderpx  						= 2;        /* border pixel of windows */
 static unsigned int snap      						= 32;       /* snap pixel */
+static const int swallowfloating          = 0;        /* 1 means swallow floating windows by default */
 static int showbar            						= 1;        /* 0 means no bar */
 static int topbar             						= 1;        /* 0 means bottom bar */
 static char font[]              					= "UbuntuMono Nerd Font:size=12:antialias=true:autohint=true";
@@ -76,22 +79,27 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",	       NULL,			   NULL,		   0,				       1,			     -1 },
-	{ NULL,          NULL,   "Picture-in-Picture", 7, 				 1, 				 -1 },    
-	{ "firefox",     NULL,			   NULL,		   1 << 1,			   0,			     -1 },
-	{ "Chromium",    NULL,			   NULL,		   1 << 1,			   0,			     -1 },
-	{ "qutebrowser", NULL,			   NULL,		   1 << 1,			   0,			     -1 },
-	{ "Thunar",      NULL,			   NULL,		   1 << 2,			   1,			     -1 },
-	{ "thunderbird", NULL,   			 NULL,  		 1 << 4, 				 0, 				 -1 },
-	{ "steam", 			 NULL,			   NULL,		   1 << 4,			   1,			     -1 },
-	{ "Clementine",  NULL,			   NULL,		   1 << 5,			   1,			     -1 },
-	{ NULL,		     "spterm",		   NULL,		   SPTAG(0),		   1,			     -1 },
-	{ NULL,		     "spfm",		     NULL,		   SPTAG(1),		   1,			     -1 },
-	{ NULL,		     "keepassxc",    NULL,		   SPTAG(2),		   1,			     -1 },
-	{ NULL,		     "pavucontrol",  NULL,		   SPTAG(3),		   1,			     -1 },
-	{ NULL,		     "pcmanfm",      NULL,		   SPTAG(4),		   1,			     -1 },
-	{ NULL,		     "sptop",        NULL,		   SPTAG(5),		   1,			     -1 },
+	/* class        instance     title           tags mask  isfloating  isterminal  noswallow  monitor */
+	{ "Gimp",        NULL,        NULL,           0,           1,          0,           0,        -1 },
+	{ "St",          NULL,        NULL,           0,           0,          1,           0,        -1 },
+	{ "Alacritty",   NULL,        NULL,           0,           0,          1,           0,        -1 },
+	{ NULL,          NULL,        "Event Tester", 0,           0,          0,           1,        -1 }, /* xev */
+	{ NULL,          NULL,   "Picture-in-Picture", 7, 				 1, 				 0,          -1,        -1 },    
+	{ "firefox",     NULL,         NULL,       1 << 1, 				 0, 				 0,          -1,        -1 },    
+	{ "librewolf-default", NULL,   NULL,       1 << 1, 				 0, 				 0,          -1,        -1 },    
+	{ "Chromium",    NULL,         NULL,       1 << 1, 				 0, 				 0,          -1,        -1 },    
+	{ "qutebrowser", NULL,         NULL,       1 << 1, 				 0, 				 0,          -1,        -1 },    
+	{ NULL,       "libreoffice",   NULL,		   1 << 2,			   0,			     0,           0,        -1 },
+	{ "Thunar",      NULL,			   NULL,		   1 << 2,			   1,			     0,           0,        -1 },
+	{ "thunderbird", NULL,   			 NULL,  		 1 << 4, 				 0, 				 0,           0,        -1 },
+	{ "steam", 			 NULL,			   NULL,		   1 << 4,			   1,			     0,           0,        -1 },
+	{ "Clementine",  NULL,			   NULL,		   1 << 5,			   1,			     0,           0,        -1 },
+	{ NULL,		     "spterm",		   NULL,		   SPTAG(0),		   1,			     1,           0,        -1 },
+	{ NULL,		     "spfm",		     NULL,		   SPTAG(1),		   1,			     1,           0,        -1 },
+	{ NULL,		     "keepassxc",    NULL,		   SPTAG(2),		   1,			     0,           0,        -1 },
+	{ NULL,		     "pavucontrol",  NULL,		   SPTAG(3),		   1,			     0,           0,        -1 },
+	{ NULL,		     "pcmanfm",      NULL,		   SPTAG(4),		   1,			     0,           0,        -1 },
+	{ NULL,		     "sptop",        NULL,		   SPTAG(5),		   1,			     1,           0,        -1 },
 };
 
 /* layout(s) */
