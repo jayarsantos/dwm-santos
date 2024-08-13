@@ -19,7 +19,9 @@ static const char dmenufont[]       = "JetBrainsMonoNF:size=12";
 static unsigned int baralpha        = 0xd0;
 static unsigned int borderalpha     = OPAQUE;
 
-#include "colors.h"
+#include "/home/jayar/.cache/wal/colors-wal-dwm.h" // need proper setup of pywal
+// #include "themes/dracula.h"
+// #include "themes/onedark.h"
 
 static const char *const autostart[] = {
 	"/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1", NULL,
@@ -171,7 +173,7 @@ static const Key keys[] = {
 	{ MODKEY|Mod4Mask,              XK_0,      togglegaps,     {0} },
 	{ MODKEY|Mod4Mask|ShiftMask,    XK_0,      defaultgaps,    {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ ControlMask,                  XK_x,      killclient,     {0} },
+	{ MODKEY|ControlMask,           XK_x,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
@@ -205,7 +207,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_s,      show,           {0} },
 	{ MODKEY|ShiftMask,             XK_s,      showall,        {0} },
 	{ MODKEY,                       XK_m,      hide,           {0} },
-	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+	// { MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 	{ MODKEY|ControlMask,           XK_r,      quit,           {1} }, 
 	{ MODKEY|ShiftMask,             XK_e,      exitdwm,        {0} },
 };
