@@ -18,26 +18,15 @@ static const char *fonts[]          = { "JetBrainsMonoNF:pixelsize=12:antialias=
 static const char dmenufont[]       = "JetBrainsMonoNF:size=12";
 static unsigned int baralpha        = 0xd0;
 static unsigned int borderalpha     = OPAQUE;
-static const char col_gray1[]       = "#222222";
-static const char col_gray2[]       = "#444444";
-static const char col_gray3[]       = "#bbbbbb";
-static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#005577";
-static const char col_urgborder[]   = "#ff0000";
-static const char *colors[][3]      = {
-	/*               fg         bg         border   */
-	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
-	[SchemeHid]  = { col_cyan,  col_gray1, col_cyan  },
-	[SchemeUrg]  = { col_gray4, col_cyan,  col_urgborder  },
-};
+
+#include "colors.h"
 
 static const char *const autostart[] = {
 	"/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1", NULL,
 	// "slstatus", NULL,
 	"dwmblocks", NULL,
 	"picom", "--animations", "-b", NULL,
-	"sh", "-c", "~/.fehbg", NULL,
+	"fehbg", NULL,
 	"/opt/apps/keepassxc", NULL,
 	"udiskie", "-Ans", NULL,
 	"numlockx", NULL,
@@ -131,7 +120,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, NULL };
 static const char *termcmd[]  = { "st", "-e", "fish", NULL };
 
 static const char *launchercmd[] = { "rofi", "-show", "drun", NULL };
@@ -196,14 +185,14 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
 	{ 0,            								XK_F12,  	 togglescratch,  {.ui = 0 } },
 	{ 0,            								XK_F11,	   togglescratch,  {.ui = 1 } },
-	{ 0, 			           						XK_F9,	   togglescratch,  {.ui = 2 } },
-	{ 0,            								XK_F4,	   togglescratch,  {.ui = 3 } },
 	{ 0,            								XK_F10,	   togglescratch,  {.ui = 4 } },
-	{ 0,            								XK_F1,	   togglescratch,  {.ui = 5 } },
+	{ 0, 			           						XK_F9,	   togglescratch,  {.ui = 2 } },
 	{ 0,            								XK_F8,	   togglescratch,  {.ui = 6 } },
-	{ 0,                            XK_F5,     spawn,          {.v = mutecmd } },
-  { 0,                            XK_F6,     spawn,          {.v = voldowncmd } },
   { 0,                            XK_F7,     spawn,          {.v = volupcmd } },
+  { 0,                            XK_F6,     spawn,          {.v = voldowncmd } },
+	{ 0,                            XK_F5,     spawn,          {.v = mutecmd } },
+	{ 0,            								XK_F4,	   togglescratch,  {.ui = 3 } },
+	{ 0,            								XK_F1,	   togglescratch,  {.ui = 5 } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
