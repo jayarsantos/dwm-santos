@@ -133,7 +133,7 @@ static const char *voldowncmd[] = { "pactl", "set-sink-volume", "0", "-5%", NULL
 static const char *browsercmd[] = {"firefox", NULL};
 
 Autostarttag autostarttaglist[] = {
-	{.cmd = browsercmd, .tags = 1 << 1 },
+	// {.cmd = browsercmd, .tags = 1 << 1 },
 	{.cmd = wallpaper, .tags = 0 },
 	{.cmd = NULL, .tags = 0 },
 };
@@ -144,6 +144,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_y,      spawn,          {.v = launchercmd} }, // spawn rofi for launching other programs
+	{ MODALT,                       XK_f,      spawn,          {.v = browsercmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstackvis,  {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstackvis,  {.i = -1 } },
