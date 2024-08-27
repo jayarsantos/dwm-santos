@@ -24,14 +24,17 @@ static unsigned int borderalpha     = OPAQUE;
 // #include "themes/music.h"
 
 static const char *const autostart[] = {
-	"/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1", NULL,
-	// "slstatus", NULL,
-	"dwmblocks", NULL,
-	"picom", "--animations", "-b", NULL,
+  "/usr/lib/x86_64-linux-gnu/libexec/polkit-kde-authentication-agent-1", NULL,
+	"slstatus", NULL,
+	"compton", NULL,
 	"fehbg", NULL,
-	"/opt/apps/keepassxc", NULL,
+	"flatpak", "run", "org.keepassxc.KeePassXC", NULL,
 	"udiskie", "-Ans", NULL,
 	"numlockx", NULL,
+  "start-pulseaudio-x11", NULL,
+  "xdg-user-dirs-update", NULL,
+  "/usr/share/libpam-kwallet-common/pam_kwallet_init", NULL,
+  "/usr/libexec/at-spi-bus-launcher --launch-immediately", NULL,
 	NULL /* terminate */
 };
 
@@ -39,11 +42,11 @@ typedef struct {
 	const char *name;
 	const void *cmd;
 } Sp;
-const char *spcmd1[] = {"st", "-n", "spterm", "-g", "120x30", NULL };
+const char *spcmd1[] = {"st", "-n", "spterm", "-g", "120x30", "-e", "fish", NULL };
 const char *spcmd2[] = {"st", "-n", "spfm", "-g", "120x30", "-e", "ranger", NULL };
-const char *spcmd3[] = {"/opt/apps/keepassxc", NULL };
+const char *spcmd3[] = {"keepassxc", NULL };
 const char *spcmd4[] = {"pavucontrol", NULL };
-const char *spcmd5[] = {"thunar", NULL };
+const char *spcmd5[] = {"pcmanfm", NULL };
 const char *spcmd6[] = {"st", "-n", "sptop", "-g", "120x30", "-e", "btop", NULL };
 const char *spcmd7[] = {"st", "-n", "smusic", "-g", "150x20", "-e", "ncmpcpp", NULL };
 static Sp scratchpads[] = {
@@ -52,7 +55,7 @@ static Sp scratchpads[] = {
 	{"spranger",    spcmd2},
 	{"keepassxc",   spcmd3},
 	{"pavucontrol", spcmd4},
-	{"thunar", 		spcmd5},
+	{"pcmanfm", 		spcmd5},
 	{"sptop", 	  	spcmd6},
 	{"smusic", 	  	spcmd7},
 };
@@ -68,6 +71,9 @@ static const Rule rules[] = {
 	/* class     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
 	{ "Gimp",    NULL,     NULL,           0,         1,          0,           0,        -1 },
 	{ "firefox", NULL,     NULL,           1 << 1,    0,          0,          -1,        -1 },
+	{ "Firefox-esr", NULL,     NULL,           1 << 1,    0,          0,          -1,        -1 },
+	{ "Google-chrome", NULL,  NULL,        1 << 1,    0,          0,          -1,        -1 },
+	{ "kmail2", NULL,      NULL,           1 << 2,    0,          0,          -1,        -1 },
 	{ "St",      NULL,     NULL,           0,         0,          1,           0,        -1 },
 	{ "Alacritty", NULL,   NULL,           0,         0,          1,           0,        -1 },
 	{ NULL,      NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
@@ -75,7 +81,7 @@ static const Rule rules[] = {
 	{ NULL,		     "spfm",		     NULL,	 SPTAG(1),  1,			     1,          1,        -1 },
 	{ NULL,		     "keepassxc",    NULL,	 SPTAG(2),  1,			    -1,         -1,        -1 },
 	{ NULL,		     "pavucontrol",  NULL,	 SPTAG(3),  1,			    -1,         -1,        -1 },
-	{ "Thunar",	 NULL,             NULL,	 SPTAG(4),  1,			    -1,         -1,        -1 },
+	{ "Pcmanfm",	 NULL,             NULL,	 SPTAG(4),  1,			    -1,         -1,        -1 },
 	{ NULL,		     "sptop",        NULL,	 SPTAG(5),  1,			     1,          1,        -1 },
 	{ NULL,		     "smusic",       NULL,	 SPTAG(6),  1,			     1,          1,        -1 },
 };
